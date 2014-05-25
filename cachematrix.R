@@ -13,7 +13,7 @@ makeCacheMatrix <- function(x = matrix()) {
             s <<- NULL
       }
       get <- function() x
-      setsolve <- function(solve) s <<- solve
+      setsolve <- function(solve) s <<- solve # Stores the inverse of the matrix in the cache.
       getsolve <- function() s
       list(set = set, get = get,
            setsolve = setsolve,
@@ -27,11 +27,11 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
       s <- x$getsolve()
-      if(!is.null(s)) {
+      if(!is.null(s)) { ## This checks whether or not there already is an existing solution.
             message("getting cached data")
             return(s)
       }
-      data <- x$get()
+      data <- x$get() ## If on line 30 there is no already existing solution, or the matrix has been modified, another calculation is started.
       s <- solve(data, ...)
       x$setsolve(s)
       s
